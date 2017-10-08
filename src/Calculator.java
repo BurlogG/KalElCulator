@@ -2,11 +2,9 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-public class Calculator
-{
+public class Calculator {
     public static void main(String[] args) {
-        EventQueue.invokeLater(new Runnable()
-        {
+        EventQueue.invokeLater(new Runnable() {
             public void run() {
                 CalculatorFrame frame = new CalculatorFrame();
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -15,6 +13,7 @@ public class Calculator
         });
     }
 }
+
 class CalculatorFrame extends JFrame {
     public CalculatorFrame() {
         setTitle("Calculator");
@@ -23,13 +22,14 @@ class CalculatorFrame extends JFrame {
         pack();
     }
 }
+
 class CalculatorPanel extends JPanel {
     public CalculatorPanel() {
         setLayout(new BorderLayout());
 
         result = 0;
         lastCommand = "=";
-        start=true;
+        start = true;
 
         display = new JButton("0");
         display.setEnabled(false);
@@ -63,54 +63,57 @@ class CalculatorPanel extends JPanel {
 
         add(panel, BorderLayout.CENTER);
     }
+
     private void addButton(String label, ActionListener listener) {
         JButton button = new JButton(label);
         button.addActionListener(listener);
         panel.add(button);
     }
-    private class InsertAction implements ActionListener
-    {
-        public void actionPerformed(ActionEvent event)
-        {
+
+    private class InsertAction implements ActionListener {
+        public void actionPerformed(ActionEvent event) {
             String input = event.getActionCommand();
-            if(start) {
+            if (start) {
                 display.setText("");
                 start = false;
             }
             display.setText(display.getText() + input);
         }
     }
-    private class CommandAction implements ActionListener
-    {
-        public void actionPerformed(ActionEvent event)
-        {
+
+    private class CommandAction implements ActionListener {
+        public void actionPerformed(ActionEvent event) {
             String command = event.getActionCommand();
-            if(start)
-            {
-                if(command.equals("-"))
-                {
+            if (start) {
+                if (command.equals("-")) {
                     display.setText(command);
                     start = false;
-                }
-                else lastCommand = command;
-            }
-            else
-            {
+                } else lastCommand = command;
+            } else {
                 calculate(Double.parseDouble(display.getText()));
                 lastCommand = command;
-                start=true;
+                start = true;
             }
         }
     }
-    public void calculate(double x)
-    {
-        if(lastCommand.equals("+")) result += x;
-        else if(lastCommand.equals("-")) result -= x;
-        else if(lastCommand.equals("*")) result *= x;
-        else if(lastCommand.equals("/")) result /= x;
-        else if(lastCommand.equals("=")) result = x;
+
+    public void calculate(double x) {
+        if (lastCommand.equals("+")) result += x;
+        else if (lastCommand.equals("-")) result -= x;
+        else if (lastCommand.equals("*")) result *= x;
+        else if (lastCommand.equals("/")) result /= x;
+        else if (lastCommand.equals("=")) result = x;
         display.setText("" + result);
     }
+        /*
+            switch (lastCommand){
+            case "+": result +=x; break;
+            case "-": result -=x; break;
+            case "*": result *=x; break;
+            case "/": result /=x; break;
+            case "=": result = x; break;
+            }*/
+
     private JButton display;
     private JPanel panel;
     private double result;
