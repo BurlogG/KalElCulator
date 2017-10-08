@@ -1,0 +1,3 @@
+# Study Calculator
+## For lulz
+
